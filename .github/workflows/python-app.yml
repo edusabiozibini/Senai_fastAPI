@@ -31,7 +31,7 @@ jobs:
                
        - name: Teste do APP
          run: |
-             PYTHONPATH=. pytest test/ -v --tb=short
+             PYTHONPATH=. pytest tests/ -v --tb=short
    
   IMAGEM:
     name: Construindo Imagem no Docker
