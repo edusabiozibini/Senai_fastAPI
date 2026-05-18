@@ -103,7 +103,7 @@ jobs:
       
               script: |
                 # baixar imagem atualizada
-                sudo docker pull ${{ env.IMAGE_NAME }}:latest
+                sudo docker pull ${{ env.edusabiozibini/senai_api }}:latest
       
                 # parar e remover container antigo
                 sudo docker stop senai_api 2>/dev/null || true
