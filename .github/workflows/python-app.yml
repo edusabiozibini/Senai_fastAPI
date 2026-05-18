@@ -103,7 +103,7 @@ jobs:
     
             script: |
               # baixar imagem atualizada
-              sudo docker pull ${{ env.edusabiozibini/senai_api }}:latest
+              sudo docker pull edusabiozibini/senai_api:latest
     
               # parar e remover container antigo
               sudo docker stop senai_api 2>/dev/null || true
@@ -114,7 +114,7 @@ jobs:
                 --name senai_api \
                 --restart unless-stopped \
                 -p 80:8080 \
-                ${{ env.IMAGE_NAME }}:latest
+                edusabiozibini/senai_api:latest
     
               # validar deploy
               sleep 10
