@@ -81,43 +81,43 @@ jobs:
               echo " Deploy feito com sucesso!"
               
 
-      DEPLOY_PRD:
-  name: Deploy Produção
-  runs-on: ubuntu-latest
-  needs: IMAGEM
-
-  # executa SOMENTE na branch main
-  if: github.ref == 'refs/heads/main'
-
-  # environment com aprovação manual
-  environment:
-    name: producao
-
-  steps:
-    - name: Deploy na EC2 Produção
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-
-        script: |
-          # baixar imagem atualizada
-          sudo docker pull ${{ env.IMAGE_NAME }}:latest
-
-          # parar e remover container antigo
-          sudo docker stop senai_api 2>/dev/null || true
-          sudo docker rm senai_api 2>/dev/null || true
-
-          # subir novo container
-          sudo docker run -d \
-            --name senai_api \
-            --restart unless-stopped \
-            -p 80:8080 \
-            ${{ env.IMAGE_NAME }}:latest
-
-          # validar deploy
-          sleep 10
-          curl -f http://localhost/health || exit 1
-
-          echo "Deploy PRODUÇÃO realizado com sucesso!"
+    DEPLOY_PRD:
+        name: Deploy Produção
+        runs-on: ubuntu-latest
+        needs: IMAGEM
+      
+        # executa SOMENTE na branch main
+        if: github.ref == 'refs/heads/main'
+      
+        # environment com aprovação manual
+        environment:
+          name: producao
+      
+        steps:
+          - name: Deploy na EC2 Produção
+            uses: appleboy/ssh-action@v1.0.3
+            with:
+              host: ${{ secrets.EC2_HOST }}
+              username: ${{ secrets.EC2_USERNAME }}
+              key: ${{ secrets.EC2_SSH_KEY }}
+      
+              script: |
+                # baixar imagem atualizada
+                sudo docker pull ${{ env.IMAGE_NAME }}:latest
+      
+                # parar e remover container antigo
+                sudo docker stop senai_api 2>/dev/null || true
+                sudo docker rm senai_api 2>/dev/null || true
+      
+                # subir novo container
+                sudo docker run -d \
+                  --name senai_api \
+                  --restart unless-stopped \
+                  -p 80:8080 \
+                  ${{ env.IMAGE_NAME }}:latest
+      
+                # validar deploy
+                sleep 10
+                curl -f http://localhost/health || exit 1
+      
+                echo "Deploy PRODUÇÃO realizado com sucesso!"
