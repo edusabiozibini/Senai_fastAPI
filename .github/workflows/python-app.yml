@@ -65,15 +65,15 @@ jobs:
           key: ${{secrets.KEY}}
           script: |
               # fazer o pull da imagem dockerhub
-              sudo docker pull ngaloni/senai_api_tb:latest
+              sudo docker pull edusabiozibini/senai_api:latest
               
               #  Parar o app atual e remover o container
-              sudo docker stop senai_api_tb 2>/dev/null || true
-              sudo docker rm senai_api_tb 2>/dev/null ||true
+              sudo docker stop senai_api 2>/dev/null || true
+              sudo docker rm senai_api 2>/dev/null ||true
 
               # publicar no novo container
-              sudo docker run --name senai_api_tb -d \
-                  --restart unless-stopped -p 80:8080 ngaloni/senai_api_tb:latest
+              sudo docker run --name senai_api -d \
+                  --restart unless-stopped -p 80:8080 edusabiozibini/senai_api:latest
 
               # Verificar se publicou
               sleep 5
